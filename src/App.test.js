@@ -1,8 +1,14 @@
-import { render, screen } from '@testing-library/react';
 import App from './App';
+import {shallow} from 'enzyme'; 
+import {findByTestAttr} from './test/testUtils'
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+const setUp = () => {
+  return shallow(<App />);
+}
+
+
+test('renders without error', () => {
+  const wrapper = setUp(); 
+  const component = findByTestAttr(wrapper, 'app-component'); 
+  expect(component.length).toBe(1);
 });
