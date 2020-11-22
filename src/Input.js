@@ -6,6 +6,12 @@ const Input = ({ secretWord }) => {
 
     const [currentGuess, setCurrentGuess] = React.useState('') // not destructuring on import so we are able to mock 
 
+    const handleClick = (event) => {
+        event.preventDefault(); 
+
+        setCurrentGuess('')
+    }
+
     return (
         <div data-test='input-component'>
             <form className='form-inline'>
@@ -18,7 +24,10 @@ const Input = ({ secretWord }) => {
             onChange={(e) => setCurrentGuess(e.target.value)}
             />
 
-            <button className='btn btn-primary mb-2'>
+            <button className='btn btn-primary mb-2'
+            data-test='submit-button'
+            onClick={handleClick}
+            >
                 Submit
             </button>
             </form>
