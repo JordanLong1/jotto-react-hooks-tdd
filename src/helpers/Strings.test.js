@@ -1,12 +1,11 @@
 import stringsModule from './Strings';
 const {getStringByLanguage} = stringsModule;
 
-
 const strings = {
-    en: {english: 'submit'}, 
-    emoji: {submit: '🚀'}, 
-    mermish: {}
-}
+    en: { submit: 'submit' },
+    emoji: { submit: '🚀' },
+    mermish: {},
+  }
 
 test('returns correct submit string for english', () => {
     const string = getStringByLanguage('en', 'submit', strings); 
