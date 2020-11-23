@@ -23,8 +23,12 @@ const languageStrings = {
     }
   }
 
-  const getStringByLanguage = (languageCode, stringKey, stringsObj={languageStrings}) => {
-
+  const getStringByLanguage = (languageCode, stringKey, strings=languageStrings) => {
+      if ( !strings[languageCode] || !strings[languageCode][stringKey]) {
+        // fall back to english
+        return strings.en[stringKey]
+      }
+      return strings[languageCode][stringKey]
   }
 
   // eslint-disable-next-line import/no-anonymous-default-export
