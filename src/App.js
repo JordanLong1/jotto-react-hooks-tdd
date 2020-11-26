@@ -1,7 +1,7 @@
 import React from 'react'; 
 import hookActions from './actions/hookActions'
 import Input from './Input'
-// import {LanguageContext} from './contexts/LanguageContext'; 
+import {languageContext} from './contexts/languageContext'; 
 import {LanguagePicker} from './LanguagePicker'; 
 
 
@@ -52,11 +52,11 @@ function App() {
   return (
    <div data-test='app-component' className='container'>
      <h1>Jotto</h1>
-     {/* <LanguageContext.Provider value={state.language} > */}
+     {/* <languageContext.Provider value={state.language} > */}
      
        <LanguagePicker setLanguage={setLanguage} />
      <Input secretWord={state.secretWord} />
-     {/* </LanguageContext.Provider>  */}
+     {/* </languageContext.Provider>  */}
    </div>
   );
 };
