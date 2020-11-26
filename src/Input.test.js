@@ -1,23 +1,28 @@
 import React from 'react';
-import {shallow} from 'enzyme'; 
-import { mockComponent } from 'react-dom/test-utils';
+import {mount, shallow} from 'enzyme'; 
 import Input from './Input'; 
 import {findByTestAttr, checkProps} from './test/testUtils'
+import languageContext from './contexts/LanguageContext'
 
-
-const setUp = (secretWord='party') => { // add prop here to pass checkProps test.
-   return shallow(<Input secretWord={secretWord}/>); // added prop here
+const setUp = ({language, secretWord}) => { // add prop here to pass checkProps test.
+    language = language || 'en'; 
+    secretWord = secretWord || 'party'
+    return mount(
+    <languageContext.Provider value={language}>
+        <Input secretWord={secretWord}/>
+    </languageContext.Provider>
+    )
     
 }
 
 test('renders the componnent without throwing an error', () => {
-    const wrapper = setUp(); 
+    const wrapper = setUp({}); 
     const component = findByTestAttr(wrapper, 'input-component'); 
     expect(component.length).toBe(1); 
 }); 
 
 test('finds submit button without throwing an error', () => {
-    const wrapper = setUp(); 
+    const wrapper = setUp({}); 
     const submitButton = findByTestAttr(wrapper, 'submit-button'); 
     expect(submitButton.length).toBe(1);
 });
@@ -32,7 +37,7 @@ describe('state controller input field', () => {
     beforeEach(() => {
         mockSetCurrentGuess.mockClear()
         React.useState = jest.fn(() => ['', mockSetCurrentGuess]); 
-        wrapper = setUp();
+        wrapper = setUp({});
     })
     test('state updates with value onChange', () => {
          const inputBox = findByTestAttr(wrapper, 'input-box'); 
@@ -46,4 +51,19 @@ describe('state controller input field', () => {
         submitButton.simulate('click', { preventDefault: () => {}}); 
         expect(mockSetCurrentGuess).toHaveBeenCalledWith('')
     });
+
+    describe('languagePicker', () => {
+        test('correctly renders submit string in english', () => {
+            const wrapper = setUp({language: 'en'}); 
+            const submitButton = findByTestAttr(wrapper, 'submit-button'); 
+            expect(submitButton.text()).toBe('Submit');
+        }); 
+
+        test('correctly renders congrats string in emoji', () => {
+            const wrapper = setUp({language: 'emoji'}); 
+            const submitButton = findByTestAttr(wrapper, 'submit-button'); 
+            expect(submitButton.text()).toBe('🚀')
+
+        })
+    })
 }); 
