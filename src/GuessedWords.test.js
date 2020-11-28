@@ -2,17 +2,12 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { findByTestAttr, checkProps } from './test/testUtils';
 import GuessedWords from './GuessedWords';
+import { mockComponent } from 'react-dom/test-utils';
 
 const defaultProps = {
   guessedWords: [{ guessedWord: 'train', letterMatchCount: 3 }],
 };
 
-/**
-* Factory function to create a ShallowWrapper for the GuessedWords component.
-* @function setup
-* @param {object} props - Component props specific to this setup.
-* @returns {ShallowWrapper}
-*/
 const setup = (props={}) => {
   const setupProps = { ...defaultProps, ...props };
   return shallow(<GuessedWords {...setupProps } />)
@@ -57,5 +52,23 @@ describe('if there are words guessed', () => {
   test('correct number of guessed words', () => {
     const guessedWordNodes = findByTestAttr(wrapper, 'guessed-word');
     expect(guessedWordNodes.length).toBe(guessedWords.length);
+  });
+});
+
+describe('languagePicker', () => {
+  test('renders guess instructions in english by default', () => {
+    const wrapper = setup({guessedWords: []});
+    const instructions = findByTestAttr(wrapper, 'guess-instructions'); 
+    expect(instructions.text()).toBe('Try to guess the secret word!'); 
+    
+  });
+
+  test('correctly renders guess for emoji', () => {
+    const mockUseContext = jest.fn().mockReturnValue('emoji'); 
+    React.useContext(mockUseContext); 
+    const wrapper = setup({ guessedWords: []}); 
+    const instructions = findByTestAttr(wrapper, 'guess-instructions'); 
+    expect(instructions.text()).toBe('🤔🤫🔤');
+
   });
 });
