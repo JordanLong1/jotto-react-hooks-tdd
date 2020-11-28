@@ -52,11 +52,11 @@ function App() {
   return (
    <div data-test='app-component' className='container'>
      <h1>Jotto</h1>
-     {/* <languageContext.Provider value={state.language} > */}
+     <languageContext.Provider value={state.language} >
      
        <LanguagePicker setLanguage={setLanguage} />
      <Input secretWord={state.secretWord} />
-     {/* </languageContext.Provider>  */}
+     </languageContext.Provider> 
    </div>
   );
 };
