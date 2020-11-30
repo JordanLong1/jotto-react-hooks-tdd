@@ -1,15 +1,17 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import languageContext from './contexts/LanguageContext'
 import stringsModule from './helpers/Strings'
+import successContext from './contexts/successContext'
 
-const Congrats = (props) => {
 
 
+const Congrats = () => {
+
+  const [success] = successContext.useSuccess(); // for the time being
   const language = React.useContext(languageContext); 
 
 
-  if (props.success) {
+  if (success) {
     return (
       <div data-test="component-congrats" className="alert alert-success">
         <span data-test="congrats-message">
@@ -24,9 +26,7 @@ const Congrats = (props) => {
   }
 };
 
-Congrats.propTypes = {
-  success: PropTypes.bool.isRequired,
-};
+
 
 const mapStateToProps = ({success}) => {
   return {success};
